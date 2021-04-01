@@ -1,6 +1,3 @@
-
-
-
 // Adding a tile layer to myMap
 var tLayer = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
   attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
@@ -19,11 +16,7 @@ var myMap = L.map("mapid", {
 
 tLayer.addTo(myMap);
 
-
-// Retreaving the data 
-// var geoData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"; 
-
-
+// Retrieve the data 
 d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson").then(function(response) {
   function styleData(feature) {
     return {
@@ -72,14 +65,11 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
         }
 }).addTo(myMap);
 
-
 // Set up the legend
 var legend = L.control({ position: "bottomright" });
 legend.onAdd = function() {
   var div = L.DomUtil.create("div", "info legend");
-  //var limits = geojson.options.limits;
   var limits = [-10, 10, 30, 50, 70, 90];
-  //var colors = geojson.options.colors;
   var colors = [
     "#CEF708",
     "#D1C80C",
@@ -88,7 +78,6 @@ legend.onAdd = function() {
     "#DA3B18",
     "#C90D1A"
   ];
-  //var labels = [];
   for (var i = 0; i < limits.length; i++) {
     div.innerHTML += "<i style=‘background:"  + colors[i] + "’></i>"
     + limits[i] + (limits[i + 1] ? "&ndash;" + limits[i + 1] + "<br>" : "+");
@@ -96,8 +85,6 @@ legend.onAdd = function() {
   return div;
 };
 
-
 // Adding legend to the map
 legend.addTo(myMap);
 });
-
