@@ -20,8 +20,8 @@ tLayer.addTo(myMap);
 d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson").then(function(response) {
   function styleData(feature) {
     return {
-      color: "#fff",
-      weight: 1,
+      color: "#e5e5e5",
+      weight: 5,
       fillOpacity: 0.8,
       opacity: 1,
       fillColor: colors(feature.geometry.coordinates[2]), 
@@ -33,7 +33,7 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
   function colors(magnitude) {
     switch (true) {
     case magnitude > 90:
-      return "#C90D1A";
+      return "#008000";
     case magnitude > 70: 
       return "#DA3B18";
     case magnitude > 50:
@@ -41,7 +41,7 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
     case magnitude > 30:
       return "#D49910";
     case magnitude > 10: 
-      return "#D1C80C";
+      return "#ffa500";
     default: 
       return "#CEF708";
     }
@@ -63,28 +63,28 @@ d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geoj
             layer.bindPopup("Magnitude: "+ feature.properties.mag + "Depth: "+  feature.geometry.coordinates[2]  + "<h3>" + feature.properties.place +
         "</h3>" + new Date(feature.properties.time));
         }
-}).addTo(myMap);
+  }).addTo(myMap);
 
 // Set up the legend
-var legend = L.control({ position: "bottomright" });
-legend.onAdd = function() {
-  var div = L.DomUtil.create("div", "info legend");
-  var limits = [-10, 10, 30, 50, 70, 90];
-  var colors = [
-    "#CEF708",
-    "#D1C80C",
-    "#D49910",
-    "#D76A14",
-    "#DA3B18",
-    "#C90D1A"
-  ];
-  for (var i = 0; i < limits.length; i++) {
-    div.innerHTML += "<i style=‘background:"  + colors[i] + "’></i>"
-    + limits[i] + (limits[i + 1] ? "&ndash;" + limits[i + 1] + "<br>" : "+");
-  }
-  return div;
-};
+  var legend = L.control({ position: "bottomright" });
+  legend.onAdd = function() {
+    var div = L.DomUtil.create("div", "info legend");
+    var limits = [-10, 10, 30, 50, 70, 90];
+    var colors = [
+      "#CEF708",
+      "#ffa500",
+      "#D49910",
+      "#D76A14",
+      "#DA3B18",
+      "#008000"
+    ];
+    for (var i = 0; i < limits.length; i++) {
+      div.innerHTML += "<i style=‘background:"  + colors[i] + "’></i>"
+      + limits[i] + (limits[i + 1] ? "&ndash;" + limits[i + 1] + "<br>" : "+");
+    }
+    return div;
+  };
 
-// Adding legend to the map
-legend.addTo(myMap);
+  // Adding legend to the map
+  legend.addTo(myMap);
 });
